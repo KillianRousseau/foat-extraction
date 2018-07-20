@@ -1,0 +1,10 @@
+Pour test :
+
+./down_url.sh plan_9 https://ia800206.us.archive.org/7/items/ClassicTrailers/Plan_9_from_outer_space_trailer_512kb.mp4
+(facultatif) ./set_parameters.sh "" (mettre des paramètres si désiré)
+./lanceur.sh plan_9
+
+(Ici, envoyer les infos au backend et s'assurer que c'est bien reçu)
+
+./make_deletable plan_9
+./concierge

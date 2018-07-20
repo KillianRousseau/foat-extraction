@@ -1,0 +1,65 @@
+
+Processus «Receptionniste» :
+    Écoute le backend (ok)
+    Attend un id et une checksum ou url de vidéo (ok)
+    Reçu ? {
+        renvoyer id et les paramètres dispos
+        créer dossier de l'id (sauf si déjà présent) (ok)
+        créer un lock dans le dossier
+        url ? {
+            Télécharger quoi qu'il arrive (ok)
+        }
+
+        Checksum pas encore present parmis les vidéos ? {
+            demande la vidéo de l'id au backend
+            réceptionne ça
+        }sinon (checksum dispo){
+            on a déjà la vidéo, rien à faire
+        }
+
+        attend des paramètres pour cet id depuis le backend
+        (timeout ?)
+        Reçu ? {
+            Param mauvais ? Le dire au backend et laisser tomber.
+            Sinon, lance l'extracteur
+        }
+    }
+
+
+--> ON REPART SUR VIDEO PUIS PARAMETRES
+
+Processus «Downloader» :
+    récupère une vidéo depuis le back-end.
+    lance l'extraction sur un fichier
+
+Processus «Extracteur» par lien:
+    prend une url et un id en paramètre.
+    va dl la vidéo
+    Va s'occuper d'extraire les infos de la vidéo correspondante
+    (timeout ?)
+    (Renvoyer un pourcentage au backend ?)
+    Extrait ? {
+        Lance l'expediteur
+    }
+
+Processus «Extracteur» par fichier :
+    prend un id en paramètre.
+    Va s'occuper d'extraire les infos de la vidéo correspondante
+    (timeout ?)
+    (Renvoyer un pourcentage au backend ?)
+    Extrait ? {
+        Lance l'expediteur
+    }
+
+Processus «Expediteur» :
+    renvoie l'id projet, le type d'extraction, les params et le xml extrait
+    while (réponse back-end = mal reçu || pas de réponse back-end){
+        renvoyer
+    }
+    supprime le lock dans le dossier de projet
+    appelle le concierge pour nettoyer après coup
+
+Processus «Concierge» :
+    Pourcentage max de place utilisée ?
+    Supprime de toutes façons les vidéos dl depuis des url (sauf si lock)
+    Regarde parmis les vidéos stockées la plus anciennement utilisée et la supprime. (sauf si lock)

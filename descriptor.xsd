@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="shot-extract">
+		 <xs:complexType>
+			<xs:sequence>
+				<xs:element name="scene" minOccurs="0" maxOccurs="unbounded">
+				  <xs:complexType>
+					<xs:sequence>
+					  <xs:element name="sceneProperties" minOccurs="1" maxOccurs="1" type="xs:string"/>
+					  <xs:element name="shot" minOccurs="0" maxOccurs="unbounded" >
+						<xs:complexType>
+						  <xs:sequence>
+							<xs:element name="shotProperties" minOccurs="1" maxOccurs="1">
+							  <xs:complexType>
+								<xs:simpleContent>
+								  <xs:extension base="xs:string">
+									<xs:attribute name="shotDistance" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="ELS"/>
+												<xs:enumeration value="LS"/>
+												<xs:enumeration value="MS"/>
+												<xs:enumeration value="MCU"/>
+												<xs:enumeration value="CU"/>
+												<xs:enumeration value="ECU"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="shotAngle" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="Eye"/>
+												<xs:enumeration value="High"/>
+												<xs:enumeration value="Low"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								  </xs:extension>
+								</xs:simpleContent>
+							  </xs:complexType>
+							</xs:element>
+							<xs:element name="frame" minOccurs="0" maxOccurs="unbounded">
+							  <xs:complexType>
+								<xs:sequence>
+								  <xs:element name="frameProperties" minOccurs="1" maxOccurs="1" type="xs:string"/>
+								  <xs:element name="actors" minOccurs="1" maxOccurs="1">
+									<xs:complexType>
+									  <xs:sequence>
+										<xs:element name="actorRef" minOccurs="0" maxOccurs="unbounded">
+										  <xs:complexType>
+											<xs:sequence>
+											  <xs:element name="onScreenPart" minOccurs="0" maxOccurs="unbounded">
+												<xs:complexType>
+												  <xs:sequence>
+													<xs:element name="position" minOccurs="1" maxOccurs="1">
+													  <xs:complexType>
+														<xs:simpleContent>
+														  <xs:extension base="xs:string">
+															<xs:attribute type="xs:float" name="x" use="required"/>
+															<xs:attribute type="xs:float" name="y" use="required"/>
+														  </xs:extension>
+														</xs:simpleContent>
+													  </xs:complexType>
+													</xs:element>
+													<xs:element name="orentation" minOccurs="1" maxOccurs="1">
+													  <xs:complexType>
+														<xs:simpleContent>
+														  <xs:extension base="xs:string">
+															<xs:attribute type="xs:float" name="azimuth" use="required"/>
+															<xs:attribute type="xs:float" name="elevation" use="required"/>
+														  </xs:extension>
+														</xs:simpleContent>
+													  </xs:complexType>
+													</xs:element>
+													<xs:element name="scale" minOccurs="1" maxOccurs="1">
+													  <xs:complexType>
+														<xs:simpleContent>
+														  <xs:extension base="xs:string">
+															<xs:attribute type="xs:float" name="relHeight" use="required"/>
+														  </xs:extension>
+														</xs:simpleContent>
+													  </xs:complexType>
+													</xs:element>
+												  </xs:sequence>
+												  <xs:attribute type="xs:string" name="part" use="required"/>
+												</xs:complexType>
+											  </xs:element>
+											</xs:sequence>
+											<xs:attribute type="xs:byte" name="refID" use="required"/>
+										  </xs:complexType>
+										</xs:element>
+									  </xs:sequence>
+									</xs:complexType>
+								  </xs:element>
+								</xs:sequence>
+								<xs:attribute type="xs:integer" name="timeId" use="required"/>
+								<xs:attribute type="xs:string" name="path" use="required"/>
+							  </xs:complexType>
+							</xs:element>
+						  </xs:sequence>
+						  <xs:attribute type="xs:integer" name="startFrame" use="required"/>
+						  <xs:attribute type="xs:integer" name="endFrame" use="required"/>
+						</xs:complexType>
+					  </xs:element>
+					</xs:sequence>
+					<xs:attribute type="xs:integer" name="startFrame" use="required"/>
+					<xs:attribute type="xs:integer" name="endFrame" use="required"/>
+				  </xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

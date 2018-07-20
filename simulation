@@ -1,0 +1,8 @@
+todo :
+xml to string before sending
+http.put et renvoyer la donnée correctement
+multi part?
+
+tests :
+non-bloquant/bloquant
+si tout est fonctionnel
