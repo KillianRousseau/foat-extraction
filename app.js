@@ -40,7 +40,7 @@ app.get('/outilparam', (request, response) =>{
   response.end(data);
 });
 
-/*Le premier réel envoie de la Back-end avec id, ext, checksum/url*/
+/*Le premier réel envoi du Back-end avec id, ext, checksum/url*/
 app.put('/creation/:_id', (request, response) =>{
   if(!request.body) {
     return response.end("Erreur, pas de données")
@@ -150,6 +150,7 @@ function lanceur(id,data,addr){
     })
 }
 
+//Lance le concierge pour vider le contenu du serveur (vidéo et fichiers xml)
 function cleaner(){
   exec('bash ../concierge.sh', (error, stdout, stderr) =>{
     if (error) {
@@ -164,18 +165,18 @@ function cleaner(){
 //passe le xml en string, avec une promesse pour sendvideo
 function xmltostring(id,data,addr,idExtractor){
   console.log("debut xml to string");
-fse.readFile('projects/'+id+'/video.xml',"utf8",function(err,data){
-  if(err){
-    console.log(err);
-  }
+  fse.readFile('projects/'+id+'/video.xml',"utf8",function(err,data){
+    if(err){
+      console.log(err);
+    }
 
-  sendvideo(id, data, addr,idExtractor);
-});
-//.then(() => sendvideo(id, data, addr))
-//.catch(err => console.error(err))
+    sendvideo(id, data, addr,idExtractor);
+  });
+  //.then(() => sendvideo(id, data, addr))
+  //.catch(err => console.error(err))
 }
 
-//envoie la video extraite et traitée au back-end
+//envoie la video extraite et traitée au back-end ainsi que le descripteur du XML
 function sendvideo(id, data, addr,idExtractor){
   console.log("start send video");
   axios.put('http://localhost:3000/api/project/'+id,{"data" :data, "idExtractor":idExtractor, "version":getVersion()})
@@ -201,6 +202,7 @@ function sendvideo(id, data, addr,idExtractor){
 
 }
 
+//Retourne la version actuelle de l'extracteur, à modifier lorsque l'extracteur est amélioré
 function getVersion(){
   return "1.0";
 }
