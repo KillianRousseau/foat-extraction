@@ -179,7 +179,7 @@ function xmltostring(id,data,addr,idExtractor){
 //envoie la video extraite et traitée au back-end ainsi que le descripteur du XML
 function sendvideo(id, data, addr,idExtractor){
   console.log("start send video");
-  axios.put('http://localhost:3000/api/project/'+id,{"data" :data, "idExtractor":idExtractor, "version":getVersion()})
+  axios.put('131.254.243.44:3000/api/project/'+id,{"data" :data, "idExtractor":idExtractor, "version":getVersion()})
   .then(function(response){
     console.log("start send descriptor");
     var descriptor;
@@ -188,7 +188,7 @@ function sendvideo(id, data, addr,idExtractor){
         console.log(err);
       }
       else{
-        axios.put('http://localhost:3000/api/descriptor/'+getVersion(),{"data" :descriptor, "idExtractor":idExtractor})
+        axios.put('131.254.243.44:3000/api/descriptor/'+getVersion(),{"data" :descriptor, "idExtractor":idExtractor})
         .then(function(response){
           console.log(response.statusCode);
         }).catch(function(error){
