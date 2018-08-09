@@ -64,7 +64,7 @@ app.put('/param/:_id', (request, response) =>{
   if(!request.body) return response.end("Erreur dans le paramétrage")
   //on reçoit les paramètres en format JSON, il faut maintenant pouvoir l'exploiter pour le script
   var p = request.body;
-  var addr = request.ip
+  var addr = request.ip;
   var param = p.param.param;
   var idExtractor = p.idExtractor;
   var id = request.params._id;
@@ -169,7 +169,6 @@ function xmltostring(id,data,addr,idExtractor){
     if(err){
       console.log(err);
     }
-
     sendvideo(id, data, addr,idExtractor);
   });
   //.then(() => sendvideo(id, data, addr))
@@ -179,7 +178,8 @@ function xmltostring(id,data,addr,idExtractor){
 //envoie la video extraite et traitée au back-end ainsi que le descripteur du XML
 function sendvideo(id, data, addr,idExtractor){
   console.log("start send video");
-  axios.put('131.254.243.44:3000/api/project/'+id,{"data" :data, "idExtractor":idExtractor, "version":getVersion()})
+  console.log("addrvid",addr);
+  axios.put("http://"+addr+':80/api/project/'+id,{"data" :data, "idExtractor":idExtractor, "version":getVersion()})
   .then(function(response){
     console.log("start send descriptor");
     var descriptor;
@@ -188,7 +188,7 @@ function sendvideo(id, data, addr,idExtractor){
         console.log(err);
       }
       else{
-        axios.put('131.254.243.44:3000/api/descriptor/'+getVersion(),{"data" :descriptor, "idExtractor":idExtractor})
+        axios.put("http://"+addr+':80/api/descriptor/'+getVersion(),{"data" :descriptor, "idExtractor":idExtractor})
         .then(function(response){
           console.log(response.statusCode);
         }).catch(function(error){

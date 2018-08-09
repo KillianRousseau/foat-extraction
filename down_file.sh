@@ -8,5 +8,5 @@ else
     echo "" > "projects/$1/parameters"
     filename=`basename "$2"`
     extension="mp4"
-    scp "elliot@127.0.0.1:~/Documents/cours_meteor/F-OAT/.meteor/local/build/programs/server/assets/app/uploads/videos/$2" "projects/$1/video.$extension"
+    scp "root@foat-backend.irisa.fr:/var/www/foat/bundle/programs/server/assets/app/uploads/videos/$2" "projects/$1/video.$extension"
 fi
